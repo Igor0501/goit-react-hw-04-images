@@ -18,40 +18,46 @@ export const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (searchQuery === '') return;
+ useEffect(() => {
+  if (searchQuery === '') return;
 
-    const getDataImages = async () => {
-      try {
-        setIsLoading(true);
+  const getDataImages = async () => {
+    try {
+      setIsLoading(true);
 
-        const { hits } = await fetchImages(searchQuery, page);
+      const { hits } = await fetchImages(searchQuery, page);
 
-        setImages(prevImages => [...prevImages, ...hits]);
+      setImages(prevImages => [...prevImages, ...hits]);
 
-        if (page !== 1) {
-          scrollOnLoad();
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-ex-assign
-        setError((error = 'Oops something went wrong...'));
-      } finally {
-        setIsLoading(false);
+      if (page !== 1) {
+        scrollOnLoad();
       }
-    };
-    getDataImages();
-  }, [page, searchQuery]);
+    } catch (error) {
+      setError('Oops something went wrong...');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  getDataImages();
+}, [page, searchQuery]);
+
 
   const handleClickLoadMore = () => {
     setPage(prevPage => prevPage + 1);
   };
 
-  const handleSubmitSearchQuery = searchQuery => {
-    setImages([]);
-    setSearchQuery(searchQuery);
-    setPage(1);
-    setError(null);
-  };
+const handleSubmitSearchQuery = (newSearchQuery) => {
+  if (newSearchQuery === searchQuery) {
+    return;
+  }
+
+  setImages([]);
+  setSearchQuery(newSearchQuery);
+  setPage(1);
+  setError(null);
+};
+
 
   const getLargeImage = largeImage => {
     setLargeImage(largeImage);
@@ -78,3 +84,5 @@ export const App = () => {
     </Container>
   );
 };
+
+export default App;

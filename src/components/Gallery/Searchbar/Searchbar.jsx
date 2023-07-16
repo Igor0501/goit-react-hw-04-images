@@ -16,7 +16,6 @@ export const SearchBar = ({ onSubmit }) => {
     if (searchQuery.trim() === '') return;
 
     onSubmit(searchQuery);
-    setSearchQuery('');
   };
 
   return (

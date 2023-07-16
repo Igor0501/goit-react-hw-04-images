@@ -5,7 +5,7 @@ import { List } from './ImageGallery.styled';
 export const ImageGallery = ({ items, getItemClick }) => {
   return (
     <List>
-      {items.map(item => (
+      {items.map((item) => (
         <GalleryItem key={item.id} item={item} getItemClick={getItemClick} />
       ))}
     </List>
@@ -13,6 +13,11 @@ export const ImageGallery = ({ items, getItemClick }) => {
 };
 
 ImageGallery.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   getItemClick: PropTypes.func.isRequired,
 };
+
